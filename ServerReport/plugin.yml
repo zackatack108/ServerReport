@@ -1,0 +1,9 @@
+name: Server_Report
+version: 1.0
+main: us.cyberplex.serverreport.Main
+commands:
+  report:
+    description: Server report base command
+  archive:
+    description: Server report base command
+    
