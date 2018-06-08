@@ -4,6 +4,7 @@ import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BookMeta;
@@ -88,7 +89,15 @@ public class ReportData {
 		if(main.getConfig().contains("Reports." + index) && player != null) {
 
 			UUID playerID = UUID.fromString(main.getConfig().getString("Reports." + index + ".player"));
-			Player author = Bukkit.getPlayer(playerID);
+			String author;
+			OfflinePlayer offline;
+			
+			if(Bukkit.getOnlinePlayers().contains(Bukkit.getPlayer(playerID))) {
+				author = Bukkit.getPlayer(playerID).getName();
+			} else {
+				offline = Bukkit.getOfflinePlayer(playerID);
+				author = offline.getName();
+			}
 			
 			String description = main.getConfig().getString("Reports." + index + ".desc");
 			String reportType = main.getConfig().getString("Reports." + index + ".type");
@@ -97,8 +106,8 @@ public class ReportData {
 			BookMeta bookMeta = (BookMeta) report.getItemMeta();
 			
 			bookMeta.setTitle(ChatColor.DARK_RED + "Report: " + index + ChatColor.YELLOW + " Type: " + reportType);
-			bookMeta.setAuthor(author.getName());
-			bookMeta.addPage(ChatColor.DARK_RED + "Reporter: " + ChatColor.DARK_GRAY + author.getName() + "\n" +
+			bookMeta.setAuthor(author);
+			bookMeta.addPage(ChatColor.DARK_RED + "Reporter: " + ChatColor.DARK_GRAY + author + "\n" +
 					ChatColor.DARK_RED + "Desc: " + ChatColor.DARK_GRAY + description);
 			
 			report.setItemMeta(bookMeta);			
@@ -113,7 +122,15 @@ public class ReportData {
 		if(main.getConfig().contains("Archived." + index) && player != null) {
 
 			UUID playerID = UUID.fromString(main.getConfig().getString("Archived." + index + ".player"));
-			Player author = Bukkit.getPlayer(playerID);
+			String author;
+			OfflinePlayer offline;
+			
+			if(Bukkit.getOnlinePlayers().contains(Bukkit.getPlayer(playerID))) {
+				author = Bukkit.getPlayer(playerID).getName();
+			} else {
+				offline = Bukkit.getOfflinePlayer(playerID);
+				author = offline.getName();
+			}
 			
 			String description = main.getConfig().getString("Archived." + index + ".desc");
 			String reportType = main.getConfig().getString("Archived." + index + ".type");
@@ -122,8 +139,8 @@ public class ReportData {
 			BookMeta bookMeta = (BookMeta) report.getItemMeta();
 
 			bookMeta.setTitle(ChatColor.DARK_RED + "Archived: " + index + ChatColor.YELLOW + " Type: " + reportType);
-			bookMeta.setAuthor(author.getName());
-			bookMeta.addPage(ChatColor.DARK_RED + "Reporter: " + ChatColor.DARK_GRAY + author.getName() + "\n" +
+			bookMeta.setAuthor(author);
+			bookMeta.addPage(ChatColor.DARK_RED + "Reporter: " + ChatColor.DARK_GRAY + author + "\n" +
 					ChatColor.DARK_RED + "Desc: " + ChatColor.DARK_GRAY + description);
 			
 			report.setItemMeta(bookMeta);			
